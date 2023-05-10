@@ -237,6 +237,7 @@ if (req.session.isLoggedIn) {
   }
 }
 
+
 exports.studentclaimaff = (req, res) => {
   if (req.session.isLoggedIn) {
     res.render('studentclaimaff')
