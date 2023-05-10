@@ -10,10 +10,13 @@ const xlsx = require('xlsx');
 const multer = require('multer');
 const Student = require('./models/Student');
 const claim =require('./models/claim');
+const claimTime = require('./models/claimTime');
 const upload = multer({ dest: 'uploads/' }); // 'uploads/' is the directory where the uploaded file will be stored
 // const fs = require('fs');
-const claimTime = require('./models/claimTime');
+const nodemailer = require('nodemailer');
+const Mailgen = require('mailgen');
 
+const { EMAIL, PASSWORD } = require('./env.js')
 
 
 const app = express();
@@ -296,6 +299,12 @@ app.post('/upload', upload.single('file'), (req, res) => {
 
 
 app.post('/claimTime', async (req, res) => {
+  const students = await Student.find({}, {matricule: 1, _id: 0});
+
+  // Transform the array of objects into a 2D array
+  const table = students.map(student => [student.matricule]);
+  
+  console.table(table);
   const newclaim = new claimTime({
     duration: req.body.Days
   
@@ -309,6 +318,62 @@ app.post('/claimTime', async (req, res) => {
       console.error(err);
       res.redirect('/'); // Redirect to error page
     });
+    
+/** send mail from real gmail account */
+let config = {
+  service: "gmail",
+  auth: {
+    user: EMAIL,
+    pass: PASSWORD,
+  },
+  debug: true // enable debugging
+};
+
+let transporter = nodemailer.createTransport(config);
+
+  let MailGenerator = new Mailgen({
+      theme: "default",
+      product : {
+          name: "Mailgen",
+          link : 'https://mailgen.js/'
+      }
+  })
+
+  let response = {
+      body: {
+          name : "Student",
+          intro: "claim ",
+          table : {
+              data : [
+                  {
+                      lastDuration : `${newclaim.duration}`,
+                      
+                  }
+              ]
+          },
+          outro: "Vous pouver maintenant reclamer jusqu'aux date limite precis"
+      }
+  }
+
+  let mail = MailGenerator.generate(response)
+
+  let message = {
+      from : EMAIL,
+      to : `21076@supnum.mr`,
+      subject: "Place Order",
+      html: mail
+  }
+  transporter.sendMail(message)
+  .then(() => {
+    console.log("Email sent successfully");
+  })
+  .catch((err) => {
+    console.error("Error sending email:", err);
+  });
+
+  // res.status(201).json("getBill Successfully...!");
+
+
 });
 
 
