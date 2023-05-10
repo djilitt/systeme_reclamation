@@ -68,7 +68,7 @@ app.get('/studentclaim', async (req, res) => {
     const data = await Student.findOne({ matricule: req.session.mat }).exec();
     claimTime.findOne({}, {}, { sort: { '_id' : -1 } })
     .then((latestClaim) => {
-       lastDuration = latestClaim.duration;
+      lastDuration = latestClaim.duration;
       
     console.log(data);
     res.render('studentclaim', { data: data ,naming: `${req.session.userName}`, lastDuration: lastDuration  });
@@ -100,12 +100,10 @@ app.get('/studentclaim', async (req, res) => {
 // })
 app.get('/studentclaimaff', async (req, res) => {
   if (req.session.isLoggedIn) {
-    const data = await claim.findOne({ marticule: req.session.mat }).exec();
+    const data = await claim.find({ marticule: req.session.mat });
     console.log(data);
 
-    function fo(data){
-      
-    }
+    
 
     res.render('studentclaimaff', { data: data ,naming: `${req.session.userName}` });
   } else {

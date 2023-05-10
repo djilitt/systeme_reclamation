@@ -7,7 +7,7 @@ const usersController = require('../controllers/usersController');
 router.get('/claim', usersController.studentclaim);
 
 router.get('/claimaff', usersController.studentclaimaff);
-// router.get('/signup',usersController.signup)
+
 
 
 

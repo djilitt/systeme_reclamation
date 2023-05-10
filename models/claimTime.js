@@ -1,7 +1,7 @@
 const mongoose =require('mongoose');
 
 const claimTimeSchema  = new mongoose.Schema({
- 
+
 duration: {
     type: String,
     required: true
