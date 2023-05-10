@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 
+
 const claimSchema = new mongoose.Schema({
   marticule:{
     type:String,
@@ -15,6 +16,8 @@ const claimSchema = new mongoose.Schema({
     type: String,
     required: true
   }
+  ,
+  dateInserted: { type: Date, default: Date.now }
 });
 
 
