@@ -71,7 +71,7 @@ app.get('/studentclaim', async (req, res) => {
     .then((latestClaim) => {
       lastDuration = latestClaim.duration;
       
-    console.log(data);
+    // console.log(data);
     res.render('studentclaim', { data: data ,naming: `${req.session.userName}`, lastDuration: lastDuration ,smodal:smodal });
   })
   } else {
@@ -138,10 +138,16 @@ app.get('/admin',async (req, res) => {
 
   claimTime.findOne({}, {}, { sort: { '_id' : -1 } })
   .then((latestClaim) => {
-    lastDuration = latestClaim.duration;
+    if (latestClaim) {
+      
+      lastDuration = latestClaim.duration;
+      res.render('adminclaim',{ lastDuration: lastDuration ,data: data });
+    } else {
+      console.log('No claim found');
+    }
+   
   
 
-    res.render('adminclaim',{ lastDuration: lastDuration ,data: data });
 })} 
 else {
   res.redirect('/');
@@ -333,7 +339,18 @@ app.post('/claimTime', async (req, res) => {
       console.error(err);
       res.redirect('/'); // Redirect to error page
     });
+    let deadline=new Date(Date.parse(newclaim.duration));
+    const currentDate = new Date();
+    const options = {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      timeZone: 'Africa/Nouakchott',
     
+    };
+    var formattedDate = currentDate.toLocaleDateString('en-US', options);
+    var today=new Date(Date.parse(formattedDate));
+ if(today.getTime()<deadline.getTime())   {
 /** send mail from real gmail account */
 let config = {
   service: "gmail",
@@ -384,10 +401,14 @@ let transporter = nodemailer.createTransport(config);
   })
   .catch((err) => {
     console.error("Error sending email:", err);
-  });
+  });}
 
   // res.status(201).json("getBill Successfully...!");
-
+else{
+  console.log(
+    "deadline not valid"
+  );
+}
 
 });
 
