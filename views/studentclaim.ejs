@@ -426,67 +426,70 @@
                                 <div class="card">
                                     <div class="card-body">
 
-                                        <!-- <div id="max-subjects-message" style="display: none;">
-                        You have already selected the maximum number of subjects.
-                    </div> -->
-                                        <% if(data.length !== 0){ %>
-                                        <table class="table table-hover table-centered mb-0">
-                                            <div id="max-subjects-message"
-                                                class="alert alert-warning alert-dismissible fade show" role="alert"
-                                                style="display: none;">
-                                                <button type="button" class="btn-close" data-bs-dismiss="alert"
-                                                    aria-label="Close"></button>
-                                                <strong>Attention - </strong> u can't not choose more than 3 subject
-                                            </div>
-                                            <thead class="table-dark">
-                                                <tr>
-                                                    <th>Matier</th>
-                                                    <th>Exement</th>
-                                                    <th>Devoir</th>
-                                                    <th>TP</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-
-                                                <% data.matiere.forEach(function(matiere) { %>
+                                                                            <!-- <div id="max-subjects-message" style="display: none;">
+                                                            You have already selected the maximum number of subjects.
+                                                        </div> -->
+                                        <% if(data.length !==0){ %>
+                                            <table class="table table-hover table-centered mb-0">
+                                                <div id="max-subjects-message"
+                                                    class="alert alert-warning alert-dismissible fade show" role="alert"
+                                                    style="display: none;">
+                                                    <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                                        aria-label="Close"></button>
+                                                    <strong>Attention - </strong> u can't not choose more than 3 subject
+                                                </div>
+                                                <thead class="table-dark">
                                                     <tr>
-                                                        <td>
-                                                            <%= matiere.nom %>
-                                                        </td>
-                                                        <td>
-                                                            <div class="form-check mb-2">
-                                                                <input type="checkbox" class="subject form-check-input"
-                                                                    id="ex1" data-type="examen">
-                                                                <!-- <label class="form-check-label" for="customCheckcolor1"></label> -->
-                                                            </div>
-                                                        </td>
-
-                                                        <td>
-                                                            <div class="form-check mb-2">
-                                                                <input type="checkbox" class="subject form-check-input"
-                                                                    id="d1" data-type="devoir">
-                                                                <!-- <label class="form-check-label" for="customCheckcolor1"></label> -->
-                                                            </div>
-                                                        </td>
-                                                        <td>
-                                                            <div class="form-check mb-2">
-                                                                <input type="checkbox" class="subject form-check-input"
-                                                                    id="tp1" data-type="tp">
-                                                                <!-- <label class="form-check-label" for="customCheckcolor1"></label> -->
-                                                            </div>
-                                                        </td>
+                                                        <th>Matier</th>
+                                                        <th>Exement</th>
+                                                        <th>Devoir</th>
+                                                        <th>TP</th>
                                                     </tr>
-                                                    <% }); %>
+                                                </thead>
+                                                <tbody>
 
-                                            </tbody>
-                                        </table>
-                                        <% } else { %>
+                                                    <% data.matiere.forEach(function(matiere) { %>
+                                                        <tr>
+                                                            <td>
+                                                                <%= matiere.nom %>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check mb-2">
+                                                                    <input type="checkbox"
+                                                                        class="subject form-check-input" id="ex1"
+                                                                        data-type="examen">
+                                                                    <!-- <label class="form-check-label" for="customCheckcolor1"></label> -->
+                                                                </div>
+                                                            </td>
 
-                                            <div>
-                                                <h1>mothing here</h1>
-                                            </div>
+                                                            <td>
+                                                                <div class="form-check mb-2">
+                                                                    <input type="checkbox"
+                                                                        class="subject form-check-input" id="d1"
+                                                                        data-type="devoir">
+                                                                    <!-- <label class="form-check-label" for="customCheckcolor1"></label> -->
+                                                                </div>
+                                                            </td>
+                                                            <td>
+                                                                <div class="form-check mb-2">
+                                                                    <input type="checkbox"
+                                                                        class="subject form-check-input" id="tp1"
+                                                                        data-type="tp">
+                                                                    <!-- <label class="form-check-label" for="customCheckcolor1"></label> -->
+                                                                </div>
+                                                            </td>
+                                                        </tr>
+                                                        <% }); %>
 
-                                            <% } %>
+                                                </tbody>
+                                            </table>
+                                            <% } else { %>
+
+                                                <div>
+                                                    <h1>mothing here</h1>
+                                                </div>
+
+                                                <% } %>
                                     </div>
                                 </div>
                                 <!-- ! end hey -->
@@ -496,8 +499,8 @@
                 </div> -->
 
                                 <div class="border rounded mt-4">
-                                    <form action="/ins" method="post">
-                                        <input type="hidden" name="mati" value="<%= Number(naming.slice(0, 5)) %>">
+                        <form action="/ins" method="post">
+                                     <input type="hidden" name="mati" value="<%= Number(naming.slice(0, 5)) %>">
 
 
                                         <textarea id="ane" name="list" style="display: none;"></textarea>
@@ -533,7 +536,7 @@
                                             class='uil uil-message me-1'></i>Submit</button>
                                 </div>
                             </div>
-                            </form>
+                        </form>
                         </div> <!-- end .border-->
 
                     </div> <!-- end card-body-->
@@ -746,6 +749,7 @@
 
             return missingElements;
         }
+
         function isempty(arr) {
             if (arr.length === 0) {
                 return true;
@@ -788,7 +792,7 @@
                     var dataType = $(this).data("type");
                     subjectArrays[subjectName] = subjectArrays[subjectName].filter(function (val) {
                         return val !== dataType;
-                    });
+                    });//mavhmt
                 }
 
 
@@ -845,11 +849,6 @@
 
             });
         });
-
-
-
-
-
     </script>
 
 
