@@ -67,7 +67,7 @@ app.get('/delit', async (req, res) => {
     res.send(`${deletedCount} documents deleted from the collection.`);
   } catch (error) {
     console.error('Error deleting documents:', error);
-    res.status(500).send('An error occurred while deleting documents.');
+    ressend('An error occurred while deleting documents.');
   }
 });
 
@@ -170,11 +170,16 @@ app.get('/admin',async (req, res) => {
     lastDuration="";
   claimTime.findOne({}, {}, { sort: { '_id' : -1 } })
   .then((latestClaim) => {
+   
+  
+
+
     if(latestClaim){
     lastDuration = latestClaim.duration;
+    res.render('adminclaim',{ lastDuration: lastDuration ,data: data ,t:t,m:m});
     }
 
-    res.render('adminclaim',{ lastDuration: lastDuration ,data: data ,t:t,m:m});
+  
 })} 
 else {
   res.redirect('/');
@@ -366,7 +371,18 @@ app.post('/claimTime', async (req, res) => {
       console.error(err);
       res.redirect('/'); // Redirect to error page
     });
+    let deadline=new Date(Date.parse(newclaim.duration));
+    const currentDate = new Date();
+    const options = {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+      timeZone: 'Africa/Nouakchott',
     
+    };
+    var formattedDate = currentDate.toLocaleDateString('en-US', options);
+    var today=new Date(Date.parse(formattedDate));
+ if(today.getTime()<deadline.getTime())   {
 /** send mail from real gmail account */
 let config = {
   service: "gmail",
@@ -417,10 +433,14 @@ let transporter = nodemailer.createTransport(config);
   })
   .catch((err) => {
     console.error("Error sending email:", err);
-  });
+  });}
 
   // res.status(201).json("getBill Successfully...!");
-
+else{
+  console.log(
+    "deadline not valid"
+  );
+}
 
 });
 
