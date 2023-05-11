@@ -354,7 +354,7 @@ let transporter = nodemailer.createTransport(config);
   let response = {
       body: {
           name : "${matricule}",
-          intro: "claim ",
+          intro: "claim  , ${code} ",
          
           outro: "votre note est vue"
       }
