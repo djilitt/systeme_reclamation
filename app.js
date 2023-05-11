@@ -71,7 +71,6 @@ app.get('/studentclaim', async (req, res) => {
     .then((latestClaim) => {
       lastDuration = latestClaim.duration;
       
-    res.render('studentclaim', { data: data ,naming: `${req.session.userName}`, lastDuration: lastDuration  });
     console.log(data);
     res.render('studentclaim', { data: data ,naming: `${req.session.userName}`, lastDuration: lastDuration ,smodal:smodal });
   })
