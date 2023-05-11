@@ -83,7 +83,7 @@ app.get('/studentclaim', async (req, res) => {
     let chek = false;
     const smodal = req.query.smodal;
     const data = await Student.findOne({ matricule: req.session.mat }).exec();
-    const datae = await claim.find({ marticule: req.session.mat },{'_id' : 0,'dateInserted':1 },{ sort: { 'dateInserted' : -1 }});
+    const datae = await claim.find({ marticule: req.session.mat },{'_id' : 0,'dateInserted':1 },{ sort: { '_id' : -1 }});
     claimTime.findOne({}, {}, { sort: { '_id' : -1 } })
     .then((latestClaim) => {
       bet=Date.parse("00/00/0000")
@@ -355,9 +355,10 @@ app.post('/claimTime', async (req, res) => {
   const students = await Student.find({}, {matricule: 1, _id: 0});
 
   // Transform the array of objects into a 2D array
-  const table = students.map(student => [student.matricule]);
+  // const table = students.map(student => [student.matricule]);
   
-  console.table(table);
+  // console.table(table);
+
   const newclaim = new claimTime({
     duration: req.body.Days
   
