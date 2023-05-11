@@ -16,6 +16,7 @@ const upload = multer({ dest: 'uploads/' }); // 'uploads/' is the directory wher
 const nodemailer = require('nodemailer');
 const Mailgen = require('mailgen');
 
+
 const { EMAIL, PASSWORD } = require('./env.js')
 
 
@@ -399,10 +400,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
 app.post('/claimTime', async (req, res) => {
   const students = await Student.find({}, {matricule: 1, _id: 0});
 
-  // Transform the array of objects into a 2D array
-  // const table = students.map(student => [student.matricule]);
   
-  // console.table(table);
 
   const newclaim = new claimTime({
     duration: req.body.Days
@@ -428,7 +426,7 @@ app.post('/claimTime', async (req, res) => {
     };
     var formattedDate = currentDate.toLocaleDateString('en-US', options);
     var today=new Date(Date.parse(formattedDate));
- if(today.getTime()<deadline.getTime())   {
+  if(today.getTime()<deadline.getTime())   {
 /** send mail from real gmail account */
 let config = {
   service: "gmail",
@@ -479,18 +477,16 @@ let transporter = nodemailer.createTransport(config);
   })
   .catch((err) => {
     console.error("Error sending email:", err);
-  });}
-
-  // res.status(201).json("getBill Successfully...!");
-else{
-  console.log(
-    "deadline not valid"
-  );
+  });
 }
+
+
 
 });
 
-
+ app.get('/chat',(req,res)=>{
+    res.render("chat")
+ });
 // Start the server
 app.listen(7000, () => {
   console.log('Server is running on port 7000');
