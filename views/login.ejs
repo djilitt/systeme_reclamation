@@ -30,7 +30,28 @@
                                 <span><img src="assets/images/logo.png" alt=""  width="200"height="170" ></span>
                            
                         </div>
+                        
+                        <% if (usermodal) { %>
+                        <div class="alert alert-success alert-dismissible bg-success text-white border-0 fade show" role="alert">
+                            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <strong>Success - </strong> user created successfully.
+                        </div>
+                        <% } %>
 
+                        <% if (errorMessage) { %>
+                            
+                            <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <strong>Error - </strong> infomation incorect 
+                            </div>
+                        <% } %>
+                        <% if (error) { %>
+                            
+                            <div class="alert alert-danger alert-dismissible bg-danger text-white border-0 fade show" role="alert">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                                <strong>Error - </strong> password is invalid
+                            </div>
+                        <% } %>
 
                         <!-- form -->
                         <form action="/login" method="post" >
@@ -57,6 +78,11 @@
                         </form>
                         <!-- end form-->
 
+
+                    
+                            
+
+
                         <!-- Footer-->
                         <footer class="footer footer-alt">
                             <p class="text-muted">Don't have an account? <a href="/signup" class="text-muted ms-1"><b>Sign Up</b></a></p>
@@ -72,6 +98,22 @@
             <!-- end Auth fluid right content -->
         </div>
         <!-- end auth-fluid-->
+
+    
+
+
+        <script>
+
+            // JavaScript code executed on the "/studentclaim" page
+        document.addEventListener('DOMContentLoaded', () => {
+        // Remove the "smodal" query parameter from the URL
+        const urlWithoutSmodal = window.location.origin + window.location.pathname;
+        window.history.replaceState(null, null, urlWithoutSmodal);
+        });
+    
+        </script>
+
+        
 
         <!-- bundle -->
         <script src="assets/js/vendor.min.js"></script>

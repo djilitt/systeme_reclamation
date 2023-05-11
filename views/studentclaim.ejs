@@ -62,9 +62,6 @@
                                             <a href="/studentclaim" class="dropdown-item">Home</a>
                                             <a href="/studentclaimaff" class="dropdown-item">My claim</a>
                                             <a href="/studentnote" class="dropdown-item">My graid</a>
-                                            <!-- <a href="/studentnote" class="dropdown-item">note</a> -->
-                                            <!-- <a href="index.html" class="dropdown-item">Ecommerce</a> -->
-                                            <!-- <a href="dashboard-projects.html" class="dropdown-item">Projects</a> -->
                                         </div>
                                     </li>
 
@@ -291,8 +288,23 @@
     </div>
     <!-- content -->
 
+    <% if (smodal) { %>
+    <div id="success-alert-modal" class="modal fade" tabindex="-1" role="dialog" aria-hidden="true">
+        <div class="modal-dialog modal-sm">
+            <div class="modal-content modal-filled bg-success">
+                <div class="modal-body p-4">
+                    <div class="text-center">
+                        <i class="dripicons-checkmark h1"></i>
+                        <h4 class="mt-2">Well Done!</h4>
+                        <p class="mt-3">Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+                        <button type="button" class="btn btn-light my-2" data-bs-dismiss="modal">Continue</button>
+                    </div>
+                </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
 
-
+    <% } %>
     <!-- Footer Start -->
     <footer class="footer">
         <div class="container-fluid">
@@ -418,9 +430,7 @@
 
         </div>
     </div>
-    <!-- <div id="max-subjects-message" style="display: none;">
-            You have already selected the maximum number of subjects.
-        </div> -->
+
     <div class="rightbar-overlay"></div>
     <!-- /End-bar -->
     <script>
@@ -432,64 +442,10 @@
     <script src="assets/js/vendor.min.js"></script>
     <script src="assets/js/app.min.js"></script>
 
-    <!-- third party js -->
-    <!-- <script src="assets/js/vendor/apexcharts.min.js"></script> -->
-    <!-- <script src="assets/js/vendor/jquery-jvectormap-1.2.2.min.js"></script> -->
-    <!-- <script src="assets/js/vendor/jquery-jvectormap-world-mill-en.js"></script> -->
-    <!-- third party js ends -->
+    
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <!-- <script>
-// Initialize counter variable
-                let numSelectedRows = 0;
 
-                // Get all rows in the table
-                const rows = $("table tbody tr");
-
-                // Add event listener to all checkboxes in the table
-                rows.each((index, row) => {
-                const checkboxes = $(row).find("input[type='checkbox']");
-                checkboxes.each((index, checkbox) => {
-                    $(checkbox).on("change", event => {
-                    if (event.target.checked) {
-                        // Increment counter if checkbox is checked
-                        numSelectedRows++;
-
-                        // If three rows are selected, hide unchecked rows
-                        if (numSelectedRows === 3) {
-                        rows.each((index, row) => {
-                            if (!$(row).hasClass("selected")) {
-                            const rowCheckboxes = $(row).find("input[type='checkbox']");
-                            if (!rowCheckboxes[0].checked && !rowCheckboxes[1].checked && !rowCheckboxes[2].checked) {
-                                $(row).hide();
-                            }
-                            }
-                        });
-                        }
-                    } else {
-                        // Decrement counter if checkbox is unchecked
-                        numSelectedRows--;
-
-                        // Show all rows
-                        rows.show();
-                    }
-
-                    // Add or remove "selected" class from current row
-                    $(row).toggleClass("selected", event.target.checked);
-                    });
-                });
-                });
-
-</script> -->
-
-    <!-- <script>
-    $(document).ready(function() {
-        $('#success-alert-modal').modal('show');
-        $('#success-alert-modal button').on('click', function() {
-            $('#success-alert-modal').modal('hide');
-        });
-    });
-</script> -->
 
     <script>
         array_name = []
@@ -499,7 +455,7 @@
 
             array_name.push(name_array)
 
-            // Log the subject name to the console
+        
 
         });
 
@@ -584,26 +540,39 @@
                 if (counter(subjectArrays) >= 3) {
                     $("#max-subjects-message").show();
 
-                    $("tr td:first-child").each(function () {
-                        //console.log("fksjhbhsd")
-                        for (var i = 0; i < b.length; i++) {
-                            if ($(this).text().indexOf(b[i]) === 0) {
-                                $(this).parent("tr").hide();
-                            }
-                        }
-                    });
+                    var rows = document.getElementsByTagName('tr');
 
+                    // Loop through each table row
+                    for (var i = 0; i < rows.length; i++) {
+                    var row = rows[i];
+                    var checkboxes = row.getElementsByTagName('input');
+
+                    var hasChecked = false;
+
+                    // Loop through checkboxes in the current row
+                    for (var j = 0; j < checkboxes.length; j++) {
+                        if (checkboxes[j].checked) {
+                        hasChecked = true;
+                        break;
+                        }
+                    }
+
+                    // Hide or show the row based on checked status
+                    if (hasChecked) {
+                        row.style.display = ''; // Show the row
+                    } else {
+                        row.style.display = 'none'; // Hide the row
+                    }
+                    }
                 }
                 else {
                     $("#max-subjects-message").hide();
-                    $("tr td:first-child").each(function () {
-                        //console.log("fksjhbhsd")
-                        for (var i = 0; i < array_name.length; i++) {
-                            if ($(this).text().indexOf(array_name[i]) === 0) {
-                                $(this).parent("tr").show();
-                            }
-                        }
-                    });
+                    var rows = document.getElementsByTagName('tr');
+
+                    for (var i = 0; i < rows.length; i++) {
+                    var row = rows[i];
+                    row.style.display = ''; // Show the row
+                }
 
                 }
 
@@ -617,7 +586,7 @@
         var lastDuration = new Date(` <%= lastDuration %>`);
     </script>
     <!-- user.js -->
-    <script src="assets/js/user.js"></script>
+        <script  src="assets/js/user.js"></script>
 
 
     <!-- demo app -->
@@ -634,6 +603,30 @@
     <script src="assets/js/vendor/simplemde.min.js"></script>
     <!-- SimpleMDE demo -->
     <script src="assets/js/pages/demo.simplemde.js"></script>
+
+    <script>
+        // Get the modal element
+        const modal = document.getElementById('success-alert-modal');
+
+        // Create a new Bootstrap Modal instance
+        const modalInstance = new bootstrap.Modal(modal);
+
+        // Show the modal
+        modalInstance.show();
+
+    </script>
+
+
+    <script>
+
+        // JavaScript code executed on the "/studentclaim" page
+    document.addEventListener('DOMContentLoaded', () => {
+    // Remove the "smodal" query parameter from the URL
+    const urlWithoutSmodal = window.location.origin + window.location.pathname;
+    window.history.replaceState(null, null, urlWithoutSmodal);
+    });
+
+    </script>
 </body>
 
 </html>

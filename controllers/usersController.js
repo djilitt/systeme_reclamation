@@ -19,6 +19,7 @@ app.use(session({
 }));
 
 // Create a new user
+//out work
 exports.createUser = async (req, res) => {
   // const { name, comment } = req.body;
 
@@ -32,14 +33,12 @@ exports.createUser = async (req, res) => {
     res.redirect('/');
   } catch (err) {
     console.error(err);
-    res.status(500).json({
-      success: false,
-      error: 'Server error'
-    });
+    res.render('e500')
   }
 };
 
 // Display all users
+//out work
 exports.displayUsers = async (req, res) => {
   try {
     const users = await User.find();
@@ -49,10 +48,7 @@ exports.displayUsers = async (req, res) => {
     });
   } catch (err) {
     console.error(err);
-    res.status(500).json({
-      success: false,
-      error: 'Server error'
-    });
+    res.render('e500')
   }
 };
 
@@ -61,16 +57,20 @@ exports.signup = (req, res) => {
 }
 
 exports.login = (req, res) => {
-  res.render('login')
+  const errorMessage = req.query.error;
+  const usermodal = req.query.usermodal;
+  const error = req.query.error2;
+  
+  res.render('login', { errorMessage,error,usermodal });
 }
 
 
 exports.insert_claim = async (req, res) => {
   let mati=req.body.mati
   let cmtr = req.body.arr;
-  let d=[];
+  // let d=[];
   let obj = JSON.parse(req.body.list);
-  d.push(obj);
+  // d.push(obj);
 // res.send(obj);
 
 const newClaim = new claim({
@@ -85,28 +85,14 @@ const newClaim = new claim({
 newClaim.save()
   .then(() => {
     console.log('Claim created successfully');
-    res.redirect('/studentclaim');
+    const smodal = "s";
+    // Redirect to "/" with the error message as a query parameter
+        res.redirect(`/studentclaim?smodal=${encodeURIComponent(smodal)}`);
+    // res.redirect('/studentclaim');
   })
   .catch(err => console.error(err));
 
 
-  // try {
-  //   const claim = await claim.create({
-      
-  //     d,
-  //     cmtr
-  //   });
-
-
-  //   res.redirect('/');
-  // } catch (err) {
-  //   console.error(err);
-  //   res.status(500).json({
-  //     success: false
-  //     ,
-  //     error: 'Server error'
-  //   });
-  // }
 }
 
 
@@ -115,26 +101,25 @@ newClaim.save()
 exports.insert = async (req, res) => {
   const { name, email, password } = req.body;
 
-  console.log('name:', name);
-  console.log('email:', email);
-  console.log('password:', md5(password));
-
+  // console.log('name:', name);
+  // console.log('email:', email);
+  // console.log('password:', md5(password));
+  // password=md5(password);
   try {
     const user = await User.create({
       name,
       email,
       password
     });
+    console.log('user created successfully');
+    const usermodal = "s";
+    // Redirect to "/" with the error message as a query parameter
+        res.redirect(`/?usermodal=${encodeURIComponent(usermodal)}`);
 
-
-    res.redirect('/');
+    // res.redirect('/');
   } catch (err) {
     console.error(err);
-    res.status(500).json({
-      success: false
-      ,
-      error: 'Server error'
-    });
+    res.render('e500');
   }
 
 }
@@ -168,12 +153,16 @@ exports.auth = async (req, res) => {
         // Redirect to home page
         res.redirect('/studentclaim');
       } else {
-        res.send("incorrect password");
+        // res.send("incorrect password");
+        const error = "s";
+    // Redirect to "/" with the error message as a query parameter
+        res.redirect(`/?error2=${encodeURIComponent(error)}`);
       }
     }
   } catch (e) {
-    console.log("ahmedou");
-    res.send("wrong details");
+    const errorMessage = "s";
+    // Redirect to "/" with the error message as a query parameter
+    res.redirect(`/?error=${encodeURIComponent(errorMessage)}`);
   }
 }
 

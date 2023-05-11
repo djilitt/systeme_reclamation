@@ -65,17 +65,20 @@ app.get('/test', (req, res) => {
 
 app.get('/studentclaim', async (req, res) => {
   if (req.session.isLoggedIn) {
+    const smodal = req.query.smodal;
     const data = await Student.findOne({ matricule: req.session.mat }).exec();
     claimTime.findOne({}, {}, { sort: { '_id' : -1 } })
     .then((latestClaim) => {
       lastDuration = latestClaim.duration;
       
     res.render('studentclaim', { data: data ,naming: `${req.session.userName}`, lastDuration: lastDuration  });
+    console.log(data);
+    res.render('studentclaim', { data: data ,naming: `${req.session.userName}`, lastDuration: lastDuration ,smodal:smodal });
   })
   } else {
     res.redirect('/');
   }
-});
+}); 
 
 
 
@@ -97,12 +100,13 @@ app.get('/studentclaim', async (req, res) => {
 //     res.redirect('/');
 // }
 // })
+
+
 app.get('/studentclaimaff', async (req, res) => {
   if (req.session.isLoggedIn) {
     const data = await claim.find({ marticule: req.session.mat });
     console.log(data);
 
-    
 
     res.render('studentclaimaff', { data: data ,naming: `${req.session.userName}` });
   } else {
@@ -150,15 +154,15 @@ app.get('/adminm', (req, res) => {
     res.render('adminclainm')
 } else {
     res.redirect('/');
-}
-  
+  }
 })
 
 // router.get('/subject', usersController.displayadmins);
 app.get('/adminsubject', (req, res) => {
   
   if (req.session.isAdmin) {
-    res.render('adminsubject')
+    const insertexcel = req.query.insertexcel;
+    res.render('adminsubject',{insertexcel})
 } else {
     res.redirect('/');
 }
@@ -287,13 +291,14 @@ app.post('/upload', upload.single('file'), (req, res) => {
           savedCount++;
           if (savedCount === data.length) {
             // All students have been saved, so redirect the user
-            res.redirect('/dl');
+            const insertexcel = "s";
+            // Redirect to "/" with the error message as a query parameter
+        res.redirect(`/adminsubject?insertexcel=${encodeURIComponent(insertexcel)}`);
+            // res.redirect('/adminsubject');
           }
         })
         .catch(error => {
-          res.status(500).json({
-            error: error
-          });
+          res.render('e500')
         });
     }
     
