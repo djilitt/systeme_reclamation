@@ -71,6 +71,18 @@ app.get('/delit', async (req, res) => {
   }
 });
 
+app.get('/delit_file', async (req, res) => {
+  try {
+    const deleteResult = await Student.deleteMany({});
+    const deletedCount = deleteResult.deletedCount;
+    res.send(`${deletedCount} documents deleted from the collection.`);
+  } catch (error) {
+    console.error('Error deleting documents:', error);
+    ressend('An error occurred while deleting documents.');
+  }
+});
+
+
 // todo: ane ncht9l hun 
 
 app.get('/studentclaim', async (req, res) => {
@@ -170,7 +182,7 @@ app.get('/admin',async (req, res) => {
     lastDuration="";
   claimTime.findOne({}, {}, { sort: { '_id' : -1 } })
   .then((latestClaim) => {
-   
+  
   
 
 
@@ -218,8 +230,41 @@ app.get('/adminsubject', (req, res) => {
 //   res.json(data);
 // });
 
+app.get('/edit', async (req, res) => {
+  let cours=[];
+  const marticule = req.query.marticule;
+  const c = await Student.findOne({ matricule: marticule }).exec();
+  const data = await claim.find({ marticule: marticule }).limit(1);
+  // console.log(c1)
+  data.forEach(function(item) {
+
+    
+    
+    for (var key in item.matiere) {
+      if (item.matiere.hasOwnProperty(key)) {
+        
+        cours.push(key)
+        
+      }
+    }
+  });
+
+  
+var filteredMatiere = c.matiere.filter(function(item) {
+  return cours.includes(item.nom);
+});
+
+console.log(filteredMatiere);
+
+  // console.log(c);
+  res.render('home', { marticule, c:filteredMatiere });
+});
 
 
+app.post('/editnote', async (req, res) => {
+const code = req.query.code;
+
+});
 
 
 

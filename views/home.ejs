@@ -7,6 +7,48 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>home</h1>
+    <h1><%= marticule %></h1>
+
+    <table class="table table-centered mb-0">
+        <thead class="table-dark">
+            <tr>
+                <th>code</th>
+                <th>nom</th>
+                <th>note</th>
+                <th class="text-center">valide</th>
+                <th class="text-center">semestre</th>
+                <th class="text-center">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if(c.length !==0){ %>
+            <% c.forEach(function(matiere) { %>
+                <tr>
+                    <td>
+                        <%= matiere.code %>
+                    </td>
+                    <td>
+                        <%= matiere.nom %>
+                    </td>
+                    <td>
+                        <%= matiere.note %>
+                    </td>
+                    <td class="table-action text-center">
+                        <%= matiere.valide %>
+                    </td>
+                    <td>
+                        <%= matiere.semestre %>
+                    </td>
+                    <td>
+                        <a href="/editnote?code=<%= matiere.code %>&mat=<%= marticule %>&<%=  %>">
+                        modif
+                        </a>
+                </td>
+                </tr>
+                <% }); %>
+                <% } %>
+        </tbody>
+    </table>
+
 </body>
 </html>
