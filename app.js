@@ -258,7 +258,7 @@ var filteredMatiere = c.matiere.filter(function(item) {
 console.log(filteredMatiere);
 
   // console.log(c);
-  res.render('home', { marticule, c:filteredMatiere });
+  res.render('chat', { marticule, c:filteredMatiere });
 });
 
 
@@ -318,7 +318,21 @@ app.post('/upload', upload.single('file'), (req, res) => {
     return newars;
 }
 
-
+app.post('/editclaim',async (req,res)=>{
+  const matricule = req.body.matricule;
+  const code = req.body.code;
+  const newValue = req.body.note;
+  
+  // Update the specific matiere
+  const updatedDocument = await Student.findOneAndUpdate(
+    { matricule: matricule, 'matiere.code': code },
+    { $set: { 'matiere.$.valide': newValue } },
+    { new: true }
+  ).exec();
+  
+  console.log(updatedDocument);
+  res.redirect('/edit?marticule');
+});
   function extractInfo(original) {
 
         // const mat = "Matricule";

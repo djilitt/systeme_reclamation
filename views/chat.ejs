@@ -253,17 +253,34 @@
                                                 </thead>
                                                 <tbody>
                                                
-                                                    <tr>
-                                                        <td class="table-user">
-                                                            <img src="assets/images/users/avatar-2.jpg" alt="table-user" class="me-2 rounded-circle" />
-                                                            Risa D. Pearson
-                                                        </td>
-                                                        <td>AC336 508 2157</td>
-                                                        <td>July 24, 1950</td>
-                                                        <td class="table-action">
-                                                            <a href="javascript:void(0);" class="action-icon" onclick="showPopup()"> <i class="mdi mdi-pencil"></i></a>
-                                                        </td>
-                                                    </tr>
+                                                   
+
+                                                    <% if(c.length !==0){ %>
+                                                        <% c.forEach(function(matiere) { %>
+                                                            <tr>
+                                                                <td>
+                                                                    <%= matiere.code %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= matiere.nom %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= matiere.note %>
+                                                                </td>
+                                                                <td class="table-action text-center">
+                                                                    <%= matiere.valide %>
+                                                                </td>
+                                                                <td>
+                                                                    <%= matiere.semestre %>
+                                                                </td>
+                                                                <td>
+                                                                    <a href="#"class="action-icon" onclick="showPopup()"> <i class="mdi mdi-pencil"></i>
+
+                                                                    </a> 
+                                                            </td>
+                                                            </tr>
+                                                            <% }); %>
+                                                            <% } %>
                                                 </tbody>
                                             </table>
                                         </div> <!-- end table responsive-->
@@ -308,11 +325,12 @@
                                 <h5 class="modal-title" id="staticBackdropLabel">Enter your input</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                             </div> <!-- end modal header -->
-                            <form action="" method="post">
+                            <form action="/editclaim" method="post">
                             <div class="modal-body">
-                               
+                                 <input type="hidden" name="code"value="<%= c.code %>">
+                                 <input type="hidden" name="matricule" value="<%= c %>">
                                 <label for="myInput m-3">Note</label>
-                                 <input type="text" class="form-control" id="myInput">
+                                 <input type="text" class="form-control"   name="note" value="<%= c.note %>" id="myInput">
                               
                             </div>
                             <div class="modal-footer">
