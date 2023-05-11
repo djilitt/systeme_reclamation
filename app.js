@@ -70,7 +70,6 @@ app.get('/studentclaim', async (req, res) => {
     .then((latestClaim) => {
       lastDuration = latestClaim.duration;
       
-    console.log(data);
     res.render('studentclaim', { data: data ,naming: `${req.session.userName}`, lastDuration: lastDuration  });
   })
   } else {
@@ -126,14 +125,24 @@ app.get('/studentnote', async (req, res) => {
 });
 
 
-app.get('/admin', (req, res) => {
-  
+app.get('/admin',  async (req, res) => {
   if (req.session.isAdmin) {
-    res.render('adminclaim')
-} else {
-    res.redirect('/');
-  }
+   
+
+  claimTime.findOne({}, {}, { sort: { '_id' : -1 } })
+  .then((latestClaim) => {
+    lastDuration = latestClaim.duration;
+  
+
+    res.render('adminclaim',{ lastDuration: lastDuration  });
+})} 
+else {
+  res.redirect('/');
+}
 })
+
+
+
 
 app.get('/adminm', (req, res) => {
   
@@ -310,7 +319,7 @@ app.post('/claimTime', async (req, res) => {
   console.log(newclaim.duration);
   newclaim.save()
     .then(savedduration => {
-      res.redirect(302, '/adminm'); // Redirect to success page
+      console.log("duration set") // Redirect to success page
     })
     .catch(err => {
       console.error(err);
@@ -330,10 +339,10 @@ let config = {
 let transporter = nodemailer.createTransport(config);
 
   let MailGenerator = new Mailgen({
-      theme: "default",
+      theme: "cerberus",
       product : {
-          name: "Mailgen",
-          link : 'https://mailgen.js/'
+          name: "SupnumCoders",
+          link : 'https://supnum.mr/'
       }
   })
 
@@ -357,8 +366,8 @@ let transporter = nodemailer.createTransport(config);
 
   let message = {
       from : EMAIL,
-      to : `21076@supnum.mr`,
-      subject: "Place Order",
+      to : `21047@supnum.mr`,
+      subject: "Reclamation Supnum",
       html: mail
   }
   transporter.sendMail(message)

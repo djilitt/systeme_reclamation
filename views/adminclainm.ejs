@@ -68,7 +68,7 @@
                                         <a href="/admin">Reclamations</a>
                                     </li>
                                     <li>
-                                        <a href="/adminsubject">Matiere</a>
+                                        <a href="/adminsubject">Notes</a>
                                     </li>
                                     
                                 </ul>
@@ -183,16 +183,16 @@
                         </div>     
                         <!-- end page title --> 
                     <div class="card">
-                        <div class="card-body ">
+                        <div class="card-body col-md-12 d-flex justify-content-between ">
                         <!-- Center modal -->
-                        
+                        <div class="card p-3 col-md-5">
                         <form action="/claimTime" method="post">
                                 
                             <!-- Date Range -->
                             <div class="mb-3">
 
                         
-                                <label class="form-label  ">Deadline</label>
+                                <label class="form-label text-info h5">Date limite </label> <i class="dripicons dripicons-broadcast text-danger h4"></i>
                                 <input type="text" class="form-control date" id="datepicker" name="Days" data-toggle="date-picker" data-single-date-picker="true">
 
                         
@@ -200,10 +200,18 @@
 
                             <!-- <input data-toggle="touchspin" data-bts-max="10"  data-bts-min="1" value="" data-btn-vertical="true" type="text"id="displayDays"><br> -->
                         
-                            <input type="submit" class="btn btn-danger float-end" data-bs-toggle="modal" data-bs-target="#centermodal">
+                            <input type="submit" id="submit-btn" class="btn btn-info float-end" data-bs-toggle="modal" value="valider" data-bs-target="#centermodal">
                         </form>
+
+                        </div>
+                        <div id="message"class="col-md-6 ">
+                            <div class="card p-3 preformatted alert-info shadow fade show rounded">
+                            <p>Un <span class="text-info "> Date limite </span> a été configurer pour la  reclamation</p>
+                            <p> de ce semestre de date prevue <span class="text-danger"> <%= lastDuration %></span></p> 
+                        </div>
                         </div>
                     </div>
+                </div>
                     </div> <!-- container -->
 
                 </div> <!-- content -->
@@ -329,6 +337,47 @@
 
         <div class="rightbar-overlay"></div>
         <!-- /End-bar -->
+        <script>
+            // Get a reference to the submit button
+            const submitBtn = document.querySelector('#submit-btn');
+          
+            // Add a click event listener to the submit button
+            submitBtn.addEventListener('click', () => {
+              // Trigger the notification using the NotificationApp plugin
+              $.NotificationApp.send(
+                "Reclamation",
+                "an Email is sent to the student",
+                "top-right",
+                "#f53867",
+                "fas fa-info-circle"
+              );
+            });
+          </script>
+                    <script>
+                    // set the date after which the button should be disabled
+            let disableDate = new Date(`<%= lastDuration %>`);
+
+            // get the button and message elements
+            let myButton = document.getElementById('submit-btn');
+            let message = document.getElementById('message');
+
+            // add click event listener to the button
+            myButton.addEventListener('click', function() {
+          
+            consolo.log(new Date());
+            console.log("hey");
+            console.log(disableDate);
+            // check if the disable date has passed
+            if (disableDate > new Date() ) {
+                // disable the button
+                message.style.display = "block";
+
+            }
+            else if(new Date()<=disableDate){
+                message.style.display = "none";
+            }
+            });
+</script>
 
 
         <!-- bundle -->

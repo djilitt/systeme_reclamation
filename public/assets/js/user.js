@@ -9,11 +9,11 @@ const options = {
 
 };
 const formattedDate = currentDate.toLocaleDateString('en-US', options);
-const lastDuration2= lastDuration.trim();
-console.log(lastDuration2); // output the value of lastDurationFormatted
+const lastDuration= lastDuration.trim();
+console.log(lastDuration); // output the value of lastDurationFormatted
 console.log(formattedDate); // output the value of formattedDate
 
-if (lastDuration2 === formattedDate) {
+if (lastDuration === formattedDate) {
   
   displayDiv.style.display = "none";
 } 
