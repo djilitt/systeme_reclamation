@@ -439,7 +439,9 @@ let transporter = nodemailer.createTransport(config);
 
 });
 
-
+ app.get('/chat',(req,res)=>{
+    res.render("chat")
+ });
 // Start the server
 app.listen(7000, () => {
   console.log('Server is running on port 7000');
