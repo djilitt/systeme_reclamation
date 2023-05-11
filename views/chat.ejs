@@ -274,9 +274,9 @@
                                                                     <%= matiere.semestre %>
                                                                 </td>
                                                                 <td>
-                                                                    <a href="#"class="action-icon" onclick="showPopup()"> <i class="mdi mdi-pencil"></i>
-
-                                                                    </a> 
+                                                                        <button onclick="showPopup('<%= JSON.stringify(matiere) %>')">
+                                                                            <i class="mdi mdi-pencil"></i>
+                                                                          </button>
                                                             </td>
                                                             </tr>
                                                             <% }); %>
@@ -325,12 +325,12 @@
                                 <h5 class="modal-title" id="staticBackdropLabel">Enter your input</h5>
                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
                             </div> <!-- end modal header -->
-                            <form action="/editclaim" method="post">
+                            <form action="/editclaime" method="post">
                             <div class="modal-body">
-                                 <input type="hidden" name="code"value="<%= c.code %>">
-                                 <input type="hidden" name="matricule" value="<%= c %>">
+                                 <input type="hidden" name="code"  id="code"> 
+                                 <input type="hidden" name="matricule"  id="matricule">
                                 <label for="myInput m-3">Note</label>
-                                 <input type="text" class="form-control"   name="note" value="<%= c.note %>" id="myInput">
+                                 <input type="text" class="form-control"   name="note"  id="note">
                               
                             </div>
                             <div class="modal-footer">
@@ -467,7 +467,28 @@
         <div class="rightbar-overlay"></div>
         <!-- /End-bar -->
 
+        <script>
 
+            function showPopup(variableValue) {
+                // Decode the URI component and parse the JSON string to retrieve the original object
+                var matiere = JSON.parse(variableValue);
+               console.log("matiere",1223,"nlj   ",matiere);
+                // Set the value of the input fields
+                document.getElementById('note').value = matiere.note;
+                document.getElementById('matricule').value = matiere.matricule;
+                document.getElementById('code').value = matiere.code;
+              
+                // Trigger the display of the modal
+                $('#myPopup').modal('show');
+              }
+               
+            function saveInput() {
+                var inputVal = $('#myInput').val();
+                console.log(inputVal); // do something with the input value
+                $('#myPopup').modal('hide');
+            }
+              
+        </script>
         <!-- bundle -->
         <script src="assets/js/vendor.min.js"></script>
         <script src="assets/js/app.min.js"></script>
@@ -480,15 +501,8 @@
         <script src="assets/js/pages/demo.profile.js"></script>
         <!-- end demo js-->
         <script>
-            function showPopup() {
-                $('#myPopup').modal('show');
-            }
-            
-            function saveInput() {
-                var inputVal = $('#myInput').val();
-                console.log(inputVal); // do something with the input value
-                $('#myPopup').modal('hide');
-            }
+           
+           
             
           </script>
           

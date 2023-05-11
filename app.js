@@ -318,21 +318,7 @@ app.post('/upload', upload.single('file'), (req, res) => {
     return newars;
 }
 
-app.post('/editclaim',async (req,res)=>{
-  const matricule = req.body.matricule;
-  const code = req.body.code;
-  const newValue = req.body.note;
-  
-  // Update the specific matiere
-  const updatedDocument = await Student.findOneAndUpdate(
-    { matricule: matricule, 'matiere.code': code },
-    { $set: { 'matiere.$.valide': newValue } },
-    { new: true }
-  ).exec();
-  
-  console.log(updatedDocument);
-  res.redirect('/edit?marticule');
-});
+
   function extractInfo(original) {
 
         // const mat = "Matricule";
@@ -497,6 +483,34 @@ let transporter = nodemailer.createTransport(config);
 
 
 });
+
+
+app.post('/editclaime', async (req, res) => {
+  const matricule = req.body.matricule;
+  const code = req.body.code;
+  const newValue = req.body.note;
+
+  // Find the document
+  const document = await Student.findOne({ matricule: matricule, 'matiere.code': code }).exec();
+
+  if (document) {
+    // Find and update the specific matiere
+    const matiere = document.matiere.find(m => m.code === code);
+    if (matiere) {
+      matiere.valide = newValue;
+      const updatedDocument = await document.save();
+      console.log(updatedDocument);
+      res.redirect('/admin');
+    } else {
+      // Handle the case when the matiere is not found
+      res.status(404).send('Matiere not found');
+    }
+  } else {
+    // Handle the case when the document is not found
+    res.status(404).send('Document not found');
+  }
+});
+
 
  app.get('/chat',(req,res)=>{
     res.render("chat")
