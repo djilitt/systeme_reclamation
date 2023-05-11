@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="utf-8">
-        <title>Profile | Hyper - Responsive Bootstrap 5 Admin Dashboard</title>
+        <title>response</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta content="A fully featured admin theme which can be used to build CRM, CMS, etc." name="description">
         <meta content="Coderthemes" name="author">
@@ -218,9 +218,10 @@
 
                             <div class="col-sm-4">
                                 <div class="text-center mt-sm-0 mt-3 text-sm-end">
-                                    <button type="button" class="btn btn-light">
+                                    <button type="button" class="btn btn-light" id="edit-profile-btn">
                                         <i class="mdi mdi-account-edit me-1"></i> Edit Profile
-                                    </button>
+                                      </button>
+                                      
                                 </div>
                             </div> <!-- end col-->
                         </div> <!-- end row -->
@@ -260,7 +261,7 @@
                                                         <td>AC336 508 2157</td>
                                                         <td>July 24, 1950</td>
                                                         <td class="table-action">
-                                                            <a href="javascript: void(0);" class="action-icon"> <i class="mdi mdi-pencil"></i></a>
+                                                            <a href="javascript:void(0);" class="action-icon" onclick="showPopup()"> <i class="mdi mdi-pencil"></i></a>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -272,7 +273,8 @@
                                 <div class=" text-white  overflow-hidden">
                                     <div class="card-body">
                                         <div class="toll-free-box text-center">
-                                            <button type="button"class="btn btn-info">send him an Email</button>
+                                           
+                                            <button type="button"class="btn btn-info"><i class="mdi mdi-gmail"></i> send  an Email</button>
                                         </div>
                                     </div> <!-- end card-body-->
                                 </div> <!-- end card-->
@@ -295,8 +297,35 @@
                         <!-- end row -->
                         
                     </div> <!-- container -->
-
-                </div> <!-- content -->
+                   
+                    
+                
+                    <!-- Modal -->
+                <div class="modal fade" id="myPopup" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="staticBackdropLabel">Enter your input</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-hidden="true"></button>
+                            </div> <!-- end modal header -->
+                            <form action="" method="post">
+                            <div class="modal-body">
+                               
+                                <label for="myInput m-3">Note</label>
+                                 <input type="text" class="form-control" id="myInput">
+                              
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                
+                                <input type="submit"  class="btn btn-primary float-end" data-bs-toggle="modal" value="valider" data-bs-target="#centermodal">
+                            </div> <!-- end modal footer -->
+                        </form>
+                        </div> <!-- end modal content-->
+                    </div> <!-- end modal dialog-->
+                </div> <!-- end modal-->
+                    
+                  
 
                 <!-- Footer Start -->
                 <footer class="footer">
@@ -432,5 +461,18 @@
         <!-- demo app -->
         <script src="assets/js/pages/demo.profile.js"></script>
         <!-- end demo js-->
+        <script>
+            function showPopup() {
+                $('#myPopup').modal('show');
+            }
+            
+            function saveInput() {
+                var inputVal = $('#myInput').val();
+                console.log(inputVal); // do something with the input value
+                $('#myPopup').modal('hide');
+            }
+            
+          </script>
+          
     </body>
 </html>
