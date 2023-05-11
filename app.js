@@ -128,14 +128,22 @@ app.get('/studentnote', async (req, res) => {
 });
 
 
-app.get('/admin', (req, res) => {
+app.get('/admin',async (req, res) => {
   
   if (req.session.isAdmin) {
-    res.render('adminclaim')
+
+    const data = await claim.find({});
+    console.log(data);
+    res.render('adminclaim',{data: data});
 } else {
     res.redirect('/');
   }
 })
+
+
+
+
+
 
 app.get('/adminm', (req, res) => {
   
