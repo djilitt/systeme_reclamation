@@ -105,7 +105,7 @@
                     <!-- end row -->
 
 
-                    <div class="row">
+                    <div class="row" id="displayDiv">
                         <div class="card">
                             <div class="card-header">
                                 <h4 class="my-1">Reclamation</h4>
@@ -548,7 +548,9 @@
 
     <script>
         // Define a global variable to store the value of lastDuration
-        var lastDuration = ' <%= lastDuration%>';
+      
+        var lastDuration = new Date(Date.parse('<%= lastDuration %>'));
+       
     </script>
     <!-- user.js -->
         <script  src="assets/js/user.js"></script>

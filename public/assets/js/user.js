@@ -1,5 +1,4 @@
 var displayDiv = document.getElementById("displayDiv");
-
 const currentDate = new Date();
 const options = {
   day: '2-digit',
@@ -8,13 +7,17 @@ const options = {
   timeZone: 'Africa/Nouakchott',
 
 };
-const formattedDate = currentDate.toLocaleDateString('en-US', options);
-const lastDuration= lastDuration.trim();
-console.log(lastDuration); // output the value of lastDurationFormatted
-console.log(formattedDate); // output the value of formattedDate
+var formattedDate = currentDate.toLocaleDateString('en-US', options);
+var today=new Date(Date.parse(formattedDate));
 
-if (lastDuration === formattedDate) {
-  
-  displayDiv.style.display = "none";
-} 
-console.log(displayDiv);
+// const lastDuration= lastDuration.trim();
+if(today.getTime() == lastDuration.getTime()){
+  displayDiv.innerHTML = '<div class="container mx-auto my-auto" style="width: 50%; height: 50%;"><div class="card"><div class="card-body"><img src="assets/images/users/deadline.png" alt="deadline"></div></div></div>';
+
+}
+else if(today.getTime()< lastDuration.getTime()){
+ displayDiv.style.display="block"
+}
+else{
+  displayDiv.innerHTML = '<div class="container mx-auto my-auto" style="width: 50%; height: 50%;"><div class="card"><div class="card-body"><img src="assets/images/users/deadline.png" alt="deadline"></div></div></div>';
+}
