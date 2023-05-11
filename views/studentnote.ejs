@@ -144,8 +144,8 @@
 
 
                 <div class="row align-items-center">
-                     <!-- Profile -->
-                     <div class="card bg-primary">
+                    <!-- Profile -->
+                    <div class="card bg-primary">
                         <div class="card-body profile-user-box">
                             <div class="row">
                                 <div class="col-sm-8">
@@ -157,12 +157,16 @@
                                         </div>
                                         <div class="col">
                                             <div>
+                                                <% if(data.length !==0){ %>
                                                 <h4 class="mt-1 mb-1 text-white"><%= data.prenom  %> <%= data.nom  %></h4>
+                                                <% } %>
                                     <p class="font-13 text-white-50">Etudiant</p>
         
                                     <ul class="mb-0 list-inline text-light">
                                         <li class="list-inline-item me-3">
+                                            <% if(data.length !==0){ %>
                                             <h5 class="mb-1"><%= data.matricule  %></h5>
+                                            <% } %>
                                             <p class="mb-0 font-13 text-white-50">Matricule</p>
                                         </li>
                                         
@@ -204,6 +208,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        <% if(data.length !==0){ %>
                                         <% data.matiere.forEach(function(matiere) { %>
                                             <tr>
                                                 <td>
@@ -223,6 +228,7 @@
                                                 </td>
                                             </tr>
                                             <% }); %>
+                                            <% } %>
                                     </tbody>
                                 </table>
 
