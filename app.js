@@ -60,19 +60,43 @@ app.get('/test', (req, res) => {
   res.render('a');
 });
 
+app.get('/delit', async (req, res) => {
+  try {
+    const deleteResult = await claimTime.deleteMany({});
+    const deletedCount = deleteResult.deletedCount;
+    res.send(`${deletedCount} documents deleted from the collection.`);
+  } catch (error) {
+    console.error('Error deleting documents:', error);
+    res.status(500).send('An error occurred while deleting documents.');
+  }
+});
 
-
+// todo: ane ncht9l hun 
 
 app.get('/studentclaim', async (req, res) => {
+
+  function isDateInRange(date, startDate, endDate) {
+    return date >= startDate && date <= endDate;
+  }
+
   if (req.session.isLoggedIn) {
+    let chek = false;
     const smodal = req.query.smodal;
     const data = await Student.findOne({ matricule: req.session.mat }).exec();
+    const datae = await claim.find({ marticule: req.session.mat },{'_id' : 0,'dateInserted':1 },{ sort: { 'dateInserted' : -1 }});
     claimTime.findOne({}, {}, { sort: { '_id' : -1 } })
     .then((latestClaim) => {
+      if(latestClaim){
       lastDuration = latestClaim.duration;
-      
-    console.log(data);
-    res.render('studentclaim', { data: data ,naming: `${req.session.userName}`, lastDuration: lastDuration ,smodal:smodal });
+      start=latestClaim.dateInserted;
+      const date1 = new Date(Date.parse(lastDuration))
+      console.log('lastDuration',date1)
+      console.log('start',start)
+    console.log('between datae',datae[0].dateInserted);
+    let chek = isDateInRange(date1, start, lastDuration);
+    console.log('chek',chek)
+      }
+    res.render('studentclaim', { data: data ,naming: `${req.session.userName}`, lastDuration: lastDuration,start:start ,smodal:smodal,datae:datae,chek:chek });
   })
   } else {
     res.redirect('/');
@@ -127,21 +151,26 @@ app.get('/studentnote', async (req, res) => {
   }
 });
 
-
+// todo: ncht9l meli hun
 app.get('/admin',async (req, res) => {
   
   if (req.session.isAdmin) {
 
     const data = await claim.find({});
-    console.log(data);
+    const count_student = await Student.find({});
+    const t=count_student.length;
+    const m=count_student[0].matiere.length;
+    console.log("total",t);
+    console.log("matiere",m);
   
-
+    lastDuration="";
   claimTime.findOne({}, {}, { sort: { '_id' : -1 } })
   .then((latestClaim) => {
+    if(latestClaim){
     lastDuration = latestClaim.duration;
-  
+    }
 
-    res.render('adminclaim',{ lastDuration: lastDuration ,data: data });
+    res.render('adminclaim',{ lastDuration: lastDuration ,data: data ,t:t,m:m});
 })} 
 else {
   res.redirect('/');
