@@ -253,136 +253,82 @@
                         <div class="col-xl-12 col-lg-12">
                             <div class="card">
                                 <div class="card-body">
-
                                     <table class="table table-centered mb-0 overflow-auto">
-                                        <!-- <a href="" class="p-0 float-end">Export <i
-                                                class="mdi mdi-download ms-1"></i></a> -->
+                                        <a href="" class="p-0 float-end">Export <i
+                                                class="mdi mdi-download ms-1"></i></a>
                                         <thead class="table-dark">
                                             <tr>
                                                 <th>Etudiants</th>
-                                                <th>Matiere 1</th>
-                                                <th>Matiere 2</th>
-                                                <th>Matiere 3</th>
+                                                <th>Matieres</th>
                                                 <th>Description</th>
-                                                <th>Status</th>
+                                                <th>Date</th>
 
                                             </tr>
                                         </thead>
                                         <tbody>
+                                            <% if(data.length !==0){ %>
+                                            <% Object.values(data).forEach(function(document) { %>
+                                                <% if (document.matiere) { %>
+                                            
+                                            
+                                            
                                             <tr>
-                                                <td>21047</td>
-                                                <td>oopjava
-                                                    <nav class="badge bg-primary">TP </nav>
-                                                </td>
-                                                <td>Flask
-                                                    <nav class="badge bg-info">Devoir</nav>
-                                                </td>
-                                                <td>Mongodb
-                                                    <nav class="badge bg-success">Examen</nav>
-                                                </td>
+                                                <td><%= document.marticule  %></td>
+                                                
+                                                
+                                                <td>
+                                                    <ul class="list-group">
+                                                        
+                                                        <% Object.entries(document.matiere).forEach(function([key, value]) { %>
+                                                        <li
+                                                            class="list-group-item d-flex justify-content-between align-items-center">
+                                                            <%= key %>
+                                                        
+                                                            <% if (value.includes('tp')){ %>
+                                                            <span
+                                                                class="badge bg-primary rounded-pill">TP</span>
+                                                            <% } %>
 
-                                                <td style="word-wrap: break-word; max-width: 300px; font-weight: bold;">
+                                                            <% if (value.includes('devoir')){ %>
+                                                                <span class="badge bg-success rounded-pill">Devoir</span>
+                                                                <% } %>
+
+                                                            <% if (value.includes('examen')){ %>
+                                                                <span class="badge bg-danger rounded-pill">Examen</span>
+                                                            <% } %>
+                                                        </li>
+                                                        <% }) %>
+                                                    
+                                                    </ul>
+                                                </td>
+                                                
+                                                
+
+
+
+
+                                                <td
+                                                    style="word-wrap: break-word; max-width: 300px; font-weight: bold;">
                                                     <div class="overflow-auto">
-                                                        <p>Le lorem ipsum (également appelé faux-texte, lipsum, ou bolo
-                                                            bolo1) est, en imprimerie, une suite de mots sans
-                                                            signification utilisée à titre provisoire pour calibrer une
-                                                            mise en page, le texte définitif venant remplacer le
-                                                            faux-texte dès qu'il est prêt ou que la mise en page est
-                                                            achevée.
-
-
+                                                        <p>
+                                                    <%= document.commentaire  %>
                                                         </p>
                                                     </div>
                                                 </td>
-                                                <td><i class="mdi mdi-circle text-danger"></i> non-repondu</td>
+                                                <td><i
+                                                        class="mdi mdi-circle text-danger"></i>
+                                                        <%= document.dateInserted.toISOString().slice(0, 10) %>
+                                                        <%= document.dateInserted.toISOString().slice(11, 19) %>
+
+                                                </td>
                                             </tr>
-                                            <tr>
-                                                <td>21074</td>
-                                                <td>oopjava
-
-                                                    <nav class="badge bg-info">Devoir</nav>
-                                                </td>
-                                                <td>Flask
-                                                    <nav class="badge bg-info">Devoir</nav>
-                                                </td>
-                                                <td>Mongodb
-                                                    <nav class="badge bg-success">Examen</nav>
-                                                </td>
-
-                                                <td style="word-wrap: break-word; max-width: 300px; font-weight: bold;">
-                                                    <div class="overflow-auto">
-                                                        <p>Le lorem ipsum (également appelé faux-texte, lipsum, ou bolo
-                                                            bolo1) est, en imprimerie, une suite de mots sans
-                                                            signification utilisée à titre provisoire pour calibrer une
-                                                            mise en page, le texte définitif venant remplacer le
-                                                            faux-texte dès qu'il est prêt ou que la mise en page est
-                                                            achevée.
-
-
-
-
-                                                        </p>
-                                                    </div>
-                                                </td>
-                                                <td><i class="mdi mdi-circle text-success"></i> repondu</td>
-                                            </tr>
-                                            <tr>
-                                                <td>21056</td>
-                                                <td>oopjava
-                                                    <nav class="badge bg-primary">TP </nav>
-                                                </td>
-                                                <td>Flask
-                                                    <nav class="badge bg-info">Devoir</nav>
-                                                </td>
-                                                <td>Mongodb
-                                                    <nav class="badge bg-success">Examen</nav>
-                                                </td>
-                                                <td style="word-wrap: break-word; max-width: 300px; font-weight: bold;">
-                                                    <div class="">
-                                                        <p>Le lorem ipsum (également appelé faux-texte, lipsum, ou bolo
-                                                            bolo1) est, en imprimerie, une suite de mots sans
-                                                            signification utilisée à titre provisoire pour calibrer une
-                                                            mise en page, le texte définitif venant remplacer le
-                                                            faux-texte dès qu'il est prêt ou que la mise en page est
-                                                            achevée.
-
-
-                                                        </p>
-                                                    </div>
-                                                </td>
-                                                <td><i class="mdi mdi-circle text-success"></i> repondu</td>
-                                            </tr>
-                                            <tr>
-                                                <td>21067</td>
-                                                <td>oopjava
-                                                    <nav class="badge bg-primary">TP </nav>
-                                                </td>
-                                                <td>Flask
-                                                    <nav class="badge bg-info">Devoir</nav>
-                                                </td>
-                                                <td>Mongodb
-                                                    <nav class="badge bg-success">Examen</nav>
-                                                </td>
-
-                                                <td style="word-wrap: break-word; max-width: 300px; font-weight: bold;">
-                                                    <div class="">
-                                                        <p>Le lorem ipsum (également appelé faux-texte, lipsum, ou bolo
-                                                            bolo1) est, en imprimerie, une suite de mots sans
-                                                            signification utilisée à titre provisoire pour calibrer une
-                                                            mise en page, le texte définitif venant remplacer le
-                                                            faux-texte dès qu'il est prêt ou que la mise en page est
-                                                            achevée.
-
-
-
-
-                                                        </p>
-                                                    </div>
-                                                </td>
-                                                <td><i class="mdi mdi-circle text-danger"></i> non-repondu</td>
-                                            </tr>
+                                            <% } %>
+                                            <% }); %>
+                                            <% } %>
                                         </tbody>
                                     </table>
+
+                                        
                                 </div>
                             </div>
                         </div> <!-- end col -->

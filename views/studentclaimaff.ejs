@@ -162,7 +162,7 @@
                                                                         </tr>
                                                                     </thead>
                                                                     <tbody>
-                                                                        
+                                                                        <% if(data.length !==0){ %>
                                                                         <% Object.values(data).forEach(function(document) { %>
                                                                             <% if (document.matiere) { %>
                                                                         
@@ -220,7 +220,7 @@
                                                                         </tr>
                                                                         <% } %>
                                                                         <% }); %>
-                                                                        
+                                                                        <% } %>
                                                                     </tbody>
                                                                 </table>
 

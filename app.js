@@ -128,16 +128,20 @@ app.get('/studentnote', async (req, res) => {
 });
 
 
-app.get('/admin',  async (req, res) => {
+app.get('/admin',async (req, res) => {
+  
   if (req.session.isAdmin) {
-   
+
+    const data = await claim.find({});
+    console.log(data);
+  
 
   claimTime.findOne({}, {}, { sort: { '_id' : -1 } })
   .then((latestClaim) => {
     lastDuration = latestClaim.duration;
   
 
-    res.render('adminclaim',{ lastDuration: lastDuration  });
+    res.render('adminclaim',{ lastDuration: lastDuration ,data: data });
 })} 
 else {
   res.redirect('/');
