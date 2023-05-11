@@ -331,8 +331,57 @@ app.post('/editclaim',async (req,res)=>{
   ).exec();
   
   console.log(updatedDocument);
-  res.redirect('/edit?marticule');
+  /** send mail from real gmail account */
+let config = {
+  service: "gmail",
+  auth: {
+    user: EMAIL,
+    pass: PASSWORD,
+  },
+  debug: true // enable debugging
+};
+
+let transporter = nodemailer.createTransport(config);
+
+  let MailGenerator = new Mailgen({
+      theme: "cerberus",
+      product : {
+          name: "SupnumCoders",
+          link : 'https://supnum.mr/'
+      }
+  })
+
+  let response = {
+      body: {
+          name : "${matricule}",
+          intro: "claim ",
+         
+          outro: "votre note est vue"
+      }
+  }
+
+  let mail = MailGenerator.generate(response)
+
+  let message = {
+      from : EMAIL,
+      to : `${matricule}@supnum.mr`,
+      subject: "Reclamation Supnum",
+      html: mail
+  }
+  transporter.sendMail(message)
+  .then(() => {
+    console.log("Email sent successfully");
+    res.redirect('/edit?marticule');
+  })
+  .catch((err) => {
+    console.error("Error sending email:", err);
+  });
 });
+
+  
+
+
+
   function extractInfo(original) {
 
         // const mat = "Matricule";
