@@ -86,16 +86,20 @@ app.get('/studentclaim', async (req, res) => {
     const datae = await claim.find({ marticule: req.session.mat },{'_id' : 0,'dateInserted':1 },{ sort: { 'dateInserted' : -1 }});
     claimTime.findOne({}, {}, { sort: { '_id' : -1 } })
     .then((latestClaim) => {
-      if(latestClaim){
-      lastDuration = latestClaim.duration;
-      start=latestClaim.dateInserted;
-      const date1 = new Date(Date.parse(lastDuration))
-      console.log('lastDuration',date1)
-      console.log('start',start)
-    console.log('between datae',datae[0].dateInserted);
-    let chek = isDateInRange(date1, start, lastDuration);
-    console.log('chek',chek)
+      bet=Date.parse("00/00/0000")
+      if (datae[0]){
+        bet=datae[0].dateInserted;
       }
+      lastDuration =new Date(Date.parse(latestClaim.duration));
+      start=new Date(Date.parse(latestClaim.dateInserted));
+      const date1 = new Date(Date.parse(bet))
+      console.log('lastDuration',lastDuration)
+      console.log('start',start)
+    console.log('between datae',date1);
+    let chek = isDateInRange(date1,  start,lastDuration);
+    console.log('chek',chek)
+      
+      console.log('chek',chek)
     res.render('studentclaim', { data: data ,naming: `${req.session.userName}`, lastDuration: lastDuration,start:start ,smodal:smodal,datae:datae,chek:chek });
   })
   } else {
