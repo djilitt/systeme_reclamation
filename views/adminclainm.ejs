@@ -337,49 +337,63 @@
 
         <div class="rightbar-overlay"></div>
         <!-- /End-bar -->
-        <script>
-            // Get a reference to the submit button
-            const submitBtn = document.querySelector('#submit-btn');
-          
-            // Add a click event listener to the submit button
-            submitBtn.addEventListener('click', () => {
-              // Trigger the notification using the NotificationApp plugin
-              $.NotificationApp.send(
-                "Reclamation",
-                "an Email is sent to the student",
-                "top-right",
-                "#f53867",
-                "fas fa-info-circle"
-              );
-            });
-          </script>
+        
                     <script>
-                    // set the date after which the button should be disabled
-            let disableDate = new Date(`<%= lastDuration %>`);
+           // set the date after which the button should be disabled
+let disableDate = new Date('<%= lastDuration %>');
+const currentDate = new Date();
+const options = {
+  day: '2-digit',
+  month: '2-digit',
+  year: 'numeric',
+  timeZone: 'Africa/Nouakchott',
 
-            // get the button and message elements
-            let myButton = document.getElementById('submit-btn');
-            let message = document.getElementById('message');
+};
+var formattedDate = currentDate.toLocaleDateString('en-US', options);
+var today = new Date(formattedDate);
+console.log(typeof today );
+console.log(typeof disableDate);
+// get the button and message elements
+let myButton = document.getElementById('submit-btn');
+let message = document.getElementById('message');
 
-            // add click event listener to the button
-            myButton.addEventListener('click', function() {
-          
-            consolo.log(new Date());
-            console.log("hey");
-            console.log(disableDate);
-            // check if the disable date has passed
-            if (disableDate > new Date() ) {
-                // disable the button
-                message.style.display = "block";
+// add click event listener to the button
+myButton.addEventListener('click', function() {
+  // check if the disable date has passed
+  if (disableDate.getTime() > today.getTime()) {
+    // disable the button
+    message.style.display = "block";
+    // Trigger the notification using the NotificationApp plugin
+    $.NotificationApp.send(
+      "Reclamation",
+      "an Email is sent to the student",
+      "top-right",
+      "#f53867",
+      "fas fa-info-circle"
+    );
 
-            }
-            else if(new Date()<=disableDate){
-                message.style.display = "none";
-            }
-            });
+    console.log("kbar");
+  } else if(disableDate.getTime() < today.getTime()) {
+    
+    console.log("s9ar");
+  } 
+ 
+});
+    
+
 </script>
 
-
+<!-- else {
+    message.style.display = "none";
+    $.NotificationApp.send(
+      "invalid",
+      "Date",
+      "top-right",
+      "#f53867",
+      "fas fa-info-circle"
+    );
+    console.log("s9ar");
+  }             -->
         <!-- bundle -->
         <script src="assets/js/vendor.min.js"></script>
         <script src="assets/js/app.min.js"></script>
